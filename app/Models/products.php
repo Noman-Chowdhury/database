@@ -11,7 +11,7 @@ class products extends Model
 
     protected $fillable =[
         'name',
-        'seller_id',
+        'user_id',
         'category_id',
         'subcategory_id',
     ];
@@ -23,7 +23,7 @@ class products extends Model
 
     public function seller()
     {
-        return $this->belongsTo(sellers::class, 'seller_id', 'id');
+        return $this->belongsTo(user::class, 'user_id', 'id');
     }
 
 }

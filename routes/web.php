@@ -4,9 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Models\Sectors;
 
 use App\Http\Controllers\SectorsController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductcategoriesController;
 use App\Http\Controllers\ProductsubcategoriesController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ClientsController;
+use App\Http\Controllers\UController;
 use App\Http\Controllers\UserController;
 use App\Models\productcategories;
 use App\Models\productsubcategories;
@@ -89,10 +92,34 @@ return view('backend.layouts.sellerregistration',compact('sectors'));
 })->name('registration');
 
 Route::post('/seller/reg',[UserController::class,'store'])->name('seller.store');
+Route::get('/seller/login',[UserController::class,'login'])->name('seller.login');
 
 Route::post('/seller/pro',[UserController::class,'index'])->name('seller.show');
 
+
+
 Route::get('/seller/dash',[UserController::class,'create'])->name('seller.dash');
+
+
+
+
+
+
+// Frontend
+Route::get('/home',[ClientsController::class,'index'])->name('home');
+
+Route::post('/seller/addproduct',[ClientsController::class,'store'])->name('seller.addproduct');
+
+Route::get('signup',[HomeController::class,'signup'])->name('signup');
+Route::get('signin',[HomeController::class,'signin'])->name('signin');
+
+Route::get('user/dashboard',[UController::class,'dashboard'])->name('dashboard');
+Route::get('user/dashboard/products',[UController::class,'products'])->name('products');
+
+
+Route::get('/test', function() {
+    return view('test');
+});
 
 
 

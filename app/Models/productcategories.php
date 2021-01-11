@@ -20,6 +20,7 @@ class productcategories extends Model
 
     }
     public function subcategories(){
+
         return $this->hasMany(productsubcategories::class,'category_id','id');
     }
 

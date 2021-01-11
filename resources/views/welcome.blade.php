@@ -130,3 +130,20 @@
         </div>
     </body>
 </html>
+
+
+
+
+
+@foreach ($products as $product)
+
+
+<div class="hero__item set-bg float-left" data-setbg="{{ $product->name }}">
+    <div class="hero__text">
+        <img src="/img/latest-product/img.jpg" alt="..." class="img-thumbnail">
+        <span>{{ $product->user->company_name }}</span>
+        <h2>{{ $product->name }} <br />100% {{ $product->subcategories->name }}</h2>
+<a href="#" class="primary-btn">SHOP NOW</a>
+</div>
+</div>
+@endforeach

@@ -3,6 +3,15 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\user;
+use App\Http\Controllers\SectorsController;
+use App\Http\Controllers\ProductcategoriesController;
+use App\Http\Controllers\ProductsubcategoriesController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ClientsController;
+
+use App\Models\productcategories;
+use App\Models\productsubcategories;
+use App\Models\products;
 
 use Illuminate\Http\Request;
 
@@ -16,14 +25,18 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $credentials= $request->only('email','password');
+        $credentials= $request->except(['_token']);
+
+
+        dd(Auth::attempt($credentials));
 
         if (Auth::attempt($credentials))
         {
-            return redirect()->route('seller.dash')->with('message','Invalid Creedentitals');
+            $request->session()->regenerate();
+            return redirect()->intended('seller.dash')->with('message','Invalid Credentitals');
         }
         else{
-            return redirect()->route('registration')->with('message','Invalid Creedentitals');
+            return redirect()->route('registration')->with('message','Invalid Credentitals');
         }
 
 
@@ -36,7 +49,11 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('backend.layouts.dashboard');
+        $subcats=productsubcategories::with('categories')->get();
+        $products=products::with('subcategories')->get();
+
+
+        return view('backend.layouts.dashboard',compact('subcats','products'));
     }
 
     /**
@@ -57,6 +74,11 @@ class UserController extends Controller
 
         ]);
         return redirect()->back()->with('message','You have successfully Registered, You Can Now Login');
+    }
+
+    public function login()
+    {
+        return view('backend.layouts.login');
     }
 
     /**

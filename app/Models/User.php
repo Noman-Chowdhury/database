@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+
+    protected $guarded = [];
     /**
      * The attributes that are mass assignable.
      *
@@ -44,4 +46,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Sectors::class,'sector_id','id');
     }
+
 }
